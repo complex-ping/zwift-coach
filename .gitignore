@@ -1,0 +1,6 @@
+.claude/
+events.json
+actuals.json
+.env
+__pycache__/
+.DS_Store
