@@ -58,7 +58,9 @@ Every fourth week is a recovery week: reduce volume and keep a small dose of int
 
 | Phase | Key day | Threshold day | Endurance day |
 |---|---|---|---|
-| Build 1 | 5×3 at 108-110%, then 4×4 at 110% | 3×8, 3×10, 3×12 at 90% | 60 min in week 1, then 90 min |
+| Build 1, Nov 2-8 | None | 5×3 at 108% + endurance, 127 min | None |
+| Build 1, Nov 9-15 | None | 5×3 at 110% + endurance, 95 min | 105 min |
+| Build 1, Nov 16-22 | 4×4 at 110% | 3×10 at 90% | 90 min |
 | Recovery | 3×5 at 100% | 45 min easy | 60 min easy |
 | Build 2 | Ramp test, 5×4 at 108%, 5×4 at 110% | 2×10 at 95%, 3×12 at 90%, 2×20 at 90% | 90-105 min |
 | Recovery | 3×5 at 100% | 45 min easy | 60 min easy |

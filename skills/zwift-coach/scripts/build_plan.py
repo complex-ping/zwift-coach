@@ -89,6 +89,15 @@ def endurance(blocks):
     }
 
 
+def vo2_long(reps, minutes, pct, blocks, tail=0):
+    """VO2max set plus endurance in one ride, for weeks with fewer riding days."""
+    workout = vo2(reps, minutes, pct, tail)
+    workout["name"] += " + Endurance"
+    workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the main set."
+    workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
+    return workout
+
+
 def openers(reps, minutes, pct, tail):
     return {
         "name": f"Recovery Threshold {reps}×{minutes}",
@@ -133,9 +142,9 @@ def ramp_test():
 
 # One row per training week, Monday first: (phase, key day, threshold day, endurance day).
 WEEKS = [
-    ("Build 1", vo2(5, 3, 108, 10), threshold(3, 8, 90, 4, 12), endurance(3)),
-    ("Build 1", vo2(5, 3, 110, 10), threshold(3, 10, 90, 4, 10), endurance(5)),
-    ("Build 1", vo2(4, 4, 110, 10), threshold(3, 12, 90, 4, 8), endurance(5)),
+    ("Build 1", None, vo2_long(5, 3, 108, 5, 2), None),
+    ("Build 1", None, vo2_long(5, 3, 110, 3), endurance(6)),
+    ("Build 1", vo2(4, 4, 110, 10), threshold(3, 10, 90, 4, 10), endurance(5)),
     ("Recovery", openers(3, 5, 100, 5), recovery(2), recovery(3)),
     ("Build 2", ramp_test(), threshold(2, 10, 95, 5, 30), endurance(6)),
     ("Build 2", vo2(5, 4, 108, 10), threshold(3, 12, 90, 4, 10), endurance(5)),
