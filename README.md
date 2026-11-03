@@ -1,6 +1,6 @@
 # Zwift Coach
 
-A personal cycling coach for [Claude Code](https://claude.com/claude-code). It reads your [Intervals.icu](https://intervals.icu) data, schedules structured workouts that sync to Zwift, and publishes a calendar page you can search.
+A personal cycling coach for [Claude Code](https://claude.com/claude-code). It reads your [Intervals.icu](https://intervals.icu) data, schedules structured workouts that sync to Zwift, and publishes a training calendar.
 
 **Live plan:** https://complex-ping.github.io/zwift-coach/
 
@@ -11,8 +11,9 @@ A personal cycling coach for [Claude Code](https://claude.com/claude-code). It r
 | `skills/zwift-coach/` | The coaching skill: workflows, training model, Zwift sync notes, plan generator |
 | `agents/zwift-coach.md` | A coach agent that uses the skill |
 | `athlete.json` | Your FTP, max HR, ride days, weekly targets |
-| `index.html`, `data.json` | The plan page and the data it shows |
+| `index.html`, `data.json` | The calendar page and the data it shows |
 | `install.sh` | Copies the skill and agent into `~/.claude` |
+| `connect-intervals.sh` | Registers the Intervals.icu MCP server with your key |
 
 ## Setup
 
@@ -24,10 +25,10 @@ A personal cycling coach for [Claude Code](https://claude.com/claude-code). It r
 
 ### 2. Connect Intervals.icu
 
-Create an API key at [intervals.icu/settings](https://intervals.icu/settings) under **Developer**. Your athlete ID is in your profile URL and looks like `i123456`. This prompts for both, without saving the key in your shell history:
+Create an API key at [intervals.icu/settings](https://intervals.icu/settings) under **Developer**. Your athlete ID is in your profile URL and looks like `i123456`. Run this in a terminal and enter both when prompted:
 
 ```bash
-read -rs "K?Intervals API key: "; echo; read -r "A?Athlete ID: "; claude mcp add intervals-icu --scope user --env INTERVALS_ICU_API_KEY="$K" --env INTERVALS_ICU_ATHLETE_ID="$A" -- uvx intervals-icu-mcp@5.8.0; unset K A
+./connect-intervals.sh
 ```
 
 Claude Code stores the key in your local config. Never commit it.
@@ -60,10 +61,10 @@ Ideas and approach drew on these projects. No code was copied from them unless n
 - [jsattler/claude-plugins](https://github.com/jsattler/claude-plugins) (MIT): coaching philosophy and workflow structure
 - [estruyf/skill-cycling-plan-coach](https://github.com/estruyf/skill-cycling-plan-coach) (MIT): rotation and weekly constraints
 - [disco-trooper/skills](https://github.com/disco-trooper/skills) (MIT): periodization references
-- [makslesz/intervals](https://github.com/makslesz/intervals): the idea of a static calendar page reading `data.json`. Its code has no license, so this page was written from scratch.
+- [makslesz/intervals](https://github.com/makslesz/intervals): `index.html` is copied from this project with the author's permission
 
 Not medical advice. Check with a doctor before hard training if you have any health concerns.
 
 ## License
 
-MIT
+MIT, except `index.html`, which belongs to its author at [makslesz/intervals](https://github.com/makslesz/intervals) and is used here with permission.

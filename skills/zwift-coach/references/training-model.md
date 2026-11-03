@@ -15,10 +15,17 @@ Power zones are the Coggan % of FTP values, which match the Intervals.icu defaul
 
 Power sets the target. HR is a cross-check, using max HR rather than an assumed threshold HR:
 
-- Zone 2 should stay near or below 75% of max HR.
+- Zone 2 should stay near or below about 77% of max HR.
 - VO2max reps should reach about 90% of max HR by the end of the set.
 
 A ramp test can overstate FTP for riders with a strong anaerobic capacity. If threshold sets feel impossible, trust that signal and retarget.
+
+## Athlete notes (November 2026)
+
+- 5-minute power is high relative to 20-minute power (153 W against 118 W), so sustained power is the main limiter. Sweet spot and threshold work carries the FTP goal.
+- Z2 at 87-91 W has held 130-133 bpm. Use about 135 bpm as the Z2 ceiling.
+- Intervals.icu has threshold HR at 170, which looks too high against a 175 max and 142-145 bpm averages in one-hour races. Judge effort by power until it is corrected.
+- Outdoor rides from August and September have no training load in Intervals.icu, so CTL understates aerobic history.
 
 ## Weekly structure
 
@@ -51,7 +58,7 @@ Every fourth week is a recovery week: reduce volume and keep a small dose of int
 
 | Phase | Key day | Threshold day | Endurance day |
 |---|---|---|---|
-| Build 1 | 5×3 at 108-110%, then 4×4 at 110% | 3×8, 3×10, 3×12 at 90% | 90 min |
+| Build 1 | 5×3 at 108-110%, then 4×4 at 110% | 3×8, 3×10, 3×12 at 90% | 60 min in week 1, then 90 min |
 | Recovery | 3×5 at 100% | 45 min easy | 60 min easy |
 | Build 2 | Ramp test, 5×4 at 108%, 5×4 at 110% | 2×10 at 95%, 3×12 at 90%, 2×20 at 90% | 90-105 min |
 | Recovery | 3×5 at 100% | 45 min easy | 60 min easy |

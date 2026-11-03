@@ -79,7 +79,7 @@ def endurance(blocks):
         "type": "endurance",
         "notes": (
             "Steady zone 2 with short tempo lifts to stay engaged. Conversational throughout, "
-            "and HR should stay near or below 131 bpm outside the lifts. Ease off if it drifts higher."
+            "and HR should stay near or below 135 bpm outside the lifts. Ease off if it drifts higher."
         ),
         "sections": [
             section("Warmup", [ramp(10, 50, 65)]),
@@ -133,7 +133,7 @@ def ramp_test():
 
 # One row per training week, Monday first: (phase, key day, threshold day, endurance day).
 WEEKS = [
-    ("Build 1", vo2(5, 3, 108, 10), threshold(3, 8, 90, 4, 12), endurance(5)),
+    ("Build 1", vo2(5, 3, 108, 10), threshold(3, 8, 90, 4, 12), endurance(3)),
     ("Build 1", vo2(5, 3, 110, 10), threshold(3, 10, 90, 4, 10), endurance(5)),
     ("Build 1", vo2(4, 4, 110, 10), threshold(3, 12, 90, 4, 8), endurance(5)),
     ("Recovery", openers(3, 5, 100, 5), recovery(2), recovery(3)),
@@ -229,10 +229,11 @@ def build(athlete):
     return workouts, weeks
 
 
-def report(weeks, targets):
+def report(weeks, targets, credit):
     print(f"{'week of':<12}{'phase':<10}{'min':>5}{'TSS':>5}{'Z2-3':>6}{'Z4-5':>6}  status")
     missed_hard = False
     for wk in weeks:
+        wk["z23"] += credit.get(wk["monday"], 0)
         z23_ok = wk["z23"] >= targets["z2_z3_min"]
         z45_ok = wk["z45"] >= targets["z4_z5_min"]
         if z23_ok and z45_ok:
@@ -260,22 +261,38 @@ def to_event(ride):
     }
 
 
-def to_page_event(ride):
+def to_page_steps(workout, ftp):
+    """Steps as [seconds, watts]. The calendar draws flat bars, so ramps become one bar per minute."""
+    bars = []
+    for st in flat_steps(workout):
+        slices = 1 if st["from"] == st["to"] else max(1, st["sec"] // 60)
+        for i in range(slices):
+            pct = st["from"] + (st["to"] - st["from"]) * (i + 0.5) / slices
+            bars.append([st["sec"] // slices, round(pct * ftp / 100)])
+    return bars
+
+
+def page_target(workout, ftp):
+    main = next(sec for sec in workout["sections"] if sec["title"] == "Main Set") if workout["type"] != "test" else None
+    if not main:
+        return "Ride to failure"
+    watts = round(main["steps"][0]["from"] * ftp / 100)
+    return f"{watts} W" if workout["type"] != "endurance" else f"{round(65 * ftp / 100)} W + lifts"
+
+
+def to_page_event(ride, ftp):
     workout = ride["workout"]
     return {
         "id": f"p_{ride['date']}",
         "date": ride["date"],
         "name": workout["name"],
         "type": workout["type"],
-        "phase": ride["phase"],
         "status": "planned",
         "minutes": ride["minutes"],
         "tss": ride["tss"],
-        "z23": ride["z23"],
-        "z45": ride["z45"],
+        "watts": page_target(workout, ftp),
         "notes": workout["notes"],
-        "text": to_intervals_text(workout),
-        "steps": [[st["sec"], st["from"], st["to"]] for st in flat_steps(workout)],
+        "steps": to_page_steps(workout, ftp),
     }
 
 
@@ -308,7 +325,7 @@ def main():
     with open(args.athlete) as f:
         athlete = json.load(f)
     rides, weeks = build(athlete)
-    ok = report(weeks, athlete["weekly_targets"])
+    ok = report(weeks, athlete["weekly_targets"], athlete["plan"].get("z2_z3_credit", {}))
 
     if args.out_events:
         keep = [r for r in rides if not args.today or r["date"] >= args.today]
@@ -321,9 +338,8 @@ def main():
                 actuals = json.load(f)
         page = {
             "updatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            "athlete": {"ftp": athlete["ftp"], "maxHr": athlete["max_hr"], "targets": athlete["weekly_targets"]},
-            "weeks": weeks,
-            "events": merge_actuals([to_page_event(r) for r in rides], actuals),
+            "ftp": athlete["ftp"],
+            "events": merge_actuals([to_page_event(r, athlete["ftp"]) for r in rides], actuals),
             "form": actuals.get("form"),
         }
         with open(args.out_page, "w") as f:

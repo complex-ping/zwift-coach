@@ -2,8 +2,25 @@
   "ftp": 125,
   "ftp_source": "ramp test",
   "max_hr": 175,
-  "ride_days": { "key": "wed", "threshold": "sat", "endurance": "sun" },
-  "weekly_targets": { "z2_z3_min": 150, "z4_z5_min": 15 },
-  "goals": ["Increase FTP", "Increase VO2max"],
-  "plan": { "first_monday": "2026-11-02", "end": "2026-12-31" }
+  "ride_days": {
+    "key": "wed",
+    "threshold": "sat",
+    "endurance": "sun"
+  },
+  "weekly_targets": {
+    "z2_z3_min": 150,
+    "z4_z5_min": 15
+  },
+  "goals": [
+    "Increase FTP",
+    "Increase VO2max"
+  ],
+  "plan": {
+    "first_monday": "2026-11-02",
+    "end": "2026-12-31",
+    "z2_z3_credit": {
+      "2026-11-02": 60
+    }
+  },
+  "strength": "1-2 full-body sessions a week; best on Mon or Thu, not the day before a hard ride"
 }

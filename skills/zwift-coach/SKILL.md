@@ -39,6 +39,8 @@ The athlete can move rides freely. Keep the week's purpose, not its dates:
 - Move with `icu_update_event`, changing only `start_date_local`.
 - Keep at least 48 hours between VO2max and threshold or sweet spot sessions. An endurance ride can follow either.
 - Missed a key session: move it within the same week if the spacing allows. Otherwise drop it. Never stack two hard days to catch up, and never carry missed minutes into next week.
+- Zwift race: it replaces the next hard session that week. Don't add another hard day on top.
+- Strength sessions: best on Monday or Thursday. Avoid the day before VO2max or threshold work.
 - Short on time: cut the endurance tail first, then the warmup's easy part. Protect the main set.
 - Moved to more than 7 days ahead: tell them it reaches Zwift only once it is inside the 7-day sync window.
 - Confirm before deleting anything, or before moving more than one week of rides at once.
@@ -76,12 +78,12 @@ The public page reads `data.json`. The athlete chose to publish workouts, power,
 1. Write `actuals.json` from Intervals data:
    ```json
    {
-     "rides": [{"date": "2026-11-04", "planned_date": "2026-11-04", "name": "VO2max 5×3", "minutes": 62, "tss": 62, "hr": 148, "watts": "136 W in each rep", "z23": 26, "z45": 15, "notes": "All reps completed.", "id": "a_i123"}],
+     "rides": [{"date": "2026-11-04", "planned_date": "2026-11-04", "id": "a_i123", "name": "VO2max 5×3", "type": "vo2max", "minutes": 62, "tss": 62, "hr": 148, "watts": "135 W in each rep", "notes": "All reps completed."}],
      "moved": [{"from": "2026-11-07", "to": "2026-11-09"}],
-     "form": {"asOf": "2026-11-04", "days": [["2026-11-04", 27.1, 31.4]]}
+     "form": {"asOf": "2026-11-04", "days": [["2026-11-04", 11.5, 28.1]]}
    }
    ```
-   `form.days` rows are date, CTL, ATL. Include only those fields: no wellness details, location, GPS, weight, API keys or athlete ID.
+   `form.days` rows are date, CTL, ATL, including projected days from `icu_get_fitness_chart`. Types are `vo2max`, `threshold`, `sweet-spot`, `endurance` or `test`. Include only those fields, and only Zwift rides: outdoor ride names can reveal locations. No wellness details, GPS, weight, API keys or athlete ID.
 2. Run `build_plan.py` with `--actuals actuals.json --out-page data.json`.
 3. Commit and push only `data.json`, and tell the athlete the page is updated.
 
