@@ -101,7 +101,7 @@ function render(){
   const y=view.getFullYear(),m=view.getMonth(),dd=view.getDate();
   const a=new Date(y,m,dd-7),z=new Date(y,m,dd+20),same=a.getFullYear()===z.getFullYear();
   const f=(x,yr)=>x.toLocaleDateString('en-GB',yr?{day:'numeric',month:'short',year:'numeric'}:{day:'numeric',month:'short'});
-  $('mon').textContent=f(a,!same)+' – '+f(z,true);
+  $('mon').textContent=matchMedia('(max-width:600px)').matches?f(new Date(y,m,dd),false)+' – '+f(new Date(y,m,dd+6),true):f(a,!same)+' – '+f(z,true);
   const by={};events.forEach(e=>{(by[e.date]=by[e.date]||[]).push(e)});
   const g=$('grid');g.textContent='';const tk=key(new Date());
   for(let w=0;w<4;w++){
@@ -141,7 +141,7 @@ function buildAgenda(){
   const A=$('agenda');A.textContent='';
   const by={};events.forEach(e=>{(by[e.date]=by[e.date]||[]).push(e)});
   const tk=key(new Date()),y=view.getFullYear(),m=view.getMonth(),dd=view.getDate(),t0=monday(new Date());
-  for(let w=0;w<4;w++){
+  for(let w=1;w<2;w++){
     const s=new Date(y,m,dd-7+w*7),en=new Date(y,m,dd-1+w*7);
     let done=0,plan=0;const body=el('div');
     for(let i=0;i<7;i++){
@@ -163,7 +163,7 @@ function buildAgenda(){
     }
     const f=x=>x.toLocaleDateString('en-GB',{day:'numeric',month:'short'}),rel=Math.round((s-t0)/604800000);
     const wk=el('div','aw'),h=el('div','awh'),l=el('div');
-    l.appendChild(el('div','lbl',rel>=-1&&rel<=1?['Last week','This week','Next week'][rel+1]:f(s)+' – '+f(en)));
+    if(rel>=-1&&rel<=1)l.appendChild(el('div','lbl',['Last week','This week','Next week'][rel+1]));
     l.appendChild(el('h3',null,f(s)+' – '+f(en)));h.appendChild(l);
     h.appendChild(el('div','tot',done?done+' TSS'+(plan?' · +'+plan+' planned':''):(plan?plan+' TSS planned':'')));
     wk.appendChild(h);wk.appendChild(body);A.appendChild(wk);
