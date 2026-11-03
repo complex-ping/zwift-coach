@@ -37,10 +37,6 @@ Claude Code stores the key in your local config. Never commit it.
 
 In Intervals.icu settings, open the Zwift box and choose **Connect**. Set the same FTP in Zwift and Intervals.icu.
 
-### 4. See ride charts on the page
-
-Open the page and choose **Connect Intervals**, then paste your API key. Clicking a finished ride then loads its power, heart rate and cadence live from Intervals. The key stays in that browser's storage and only goes to intervals.icu. It gives full access to your Intervals account, so use it only on your own devices, and choose **Disconnect** when you're done on a shared one.
-
 ## Use it
 
 ```text

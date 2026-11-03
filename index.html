@@ -48,30 +48,9 @@ dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:12px 0 0}
 dt{opacity:.75}dd{margin:0}
 .cw{margin:12px 0 2px;background:rgba(18,10,28,.6);color:#f1e9f5;border-radius:16px;padding:10px 10px 6px}
 .cw svg{display:block;width:100%;height:auto}.cw .cap{font-size:12px;opacity:.75;margin-top:4px}
-#formsec{background:linear-gradient(145deg,#6d5951 0%,#3d3537 55%,#2a2527 100%);color:#f3ece8;border-color:rgba(255,255,255,.12)}
-.fgrid{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center;margin-top:8px}
-@media (max-width:540px){.fgrid{grid-template-columns:1fr}}
-#fgfx svg{display:block;width:120px;height:auto;margin:10px 0 8px}
-#fgfx .zn{font-family:"Instrument Serif",Georgia,serif;font-size:24px;line-height:1.1}
-#fgfx .sub{font:11px "Space Mono",ui-monospace,monospace;opacity:.7;margin-top:4px}
-#fchart svg{display:block;width:100%;height:auto;touch-action:none}
-#fread{font:11px "Space Mono",ui-monospace,monospace;opacity:.8;margin-top:6px;min-height:16px}
+#fitsec,#formsec{background:linear-gradient(145deg,#6d5951 0%,#3d3537 55%,#2a2527 100%);color:#f3ece8;border-color:rgba(255,255,255,.12)}
+#fitsec svg,#formsec svg{display:block;width:100%;height:auto;touch-action:pan-y}
 #agenda{display:none}
-.icu{font:11px "Space Mono",ui-monospace,monospace;color:var(--mut);margin:-4px 0 12px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
-.icu button{background:none;border:0;padding:6px 0;text-decoration:underline;color:inherit;font:inherit}
-.icu form{display:flex;flex-wrap:wrap;gap:6px;width:100%;align-items:center}
-.icu input{flex:1 1 220px;min-width:0;min-height:44px;font:inherit;color:var(--fg);background:var(--cell);border:1px solid var(--line);border-radius:12px;padding:0 12px}
-.icu form button{min-height:44px;padding:0 14px;text-decoration:none;background:var(--cell);border:1px solid var(--line);border-radius:999px;color:var(--fg)}
-.icu .hint{width:100%}
-.rc{min-height:44px}
-.rc svg{touch-action:pan-y}
-.rc .link{background:none;border:0;padding:6px 0;text-decoration:underline;color:inherit;font-size:12px}
-.rr{font:11px "Space Mono",ui-monospace,monospace;opacity:.85;margin-top:6px;min-height:16px}
-.rs{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:8px;margin:12px 0 2px}
-.rs b{display:block;font-size:16px;font-weight:600}.rs span{font-size:11px;opacity:.75}
-.zh{font-size:12px;opacity:.75;margin-top:12px}
-.zb{display:grid;grid-template-columns:24px 1fr 52px;gap:8px;align-items:center;font-size:12px;margin-top:4px}
-.zb .zt{background:rgba(255,255,255,.1);border-radius:4px}.zb i{display:block;height:8px;border-radius:4px}.zb .m{text-align:right}
 .aw{margin-top:16px}.awh{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-bottom:4px}
 .awh h3{font-family:"Instrument Serif",Georgia,"Times New Roman",serif;font-weight:400;font-size:24px;margin:2px 0 0}
 .tot{font:11px "Space Mono",ui-monospace,monospace;color:var(--mut);text-align:right}
@@ -90,9 +69,6 @@ dt{opacity:.75}dd{margin:0}
 @media (max-width:600px){
 #app{padding:10px 8px 24px}.card{padding:14px;border-radius:22px}h1{font-size:28px}
 #head,#grid{display:none}#agenda{display:block}#dwrap{display:none!important}
-.fgrid{grid-template-columns:1fr}
-#fgfx{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center}
-#fgfx .lbl{grid-column:1/3}#fgfx svg{grid-row:2/4;width:92px;margin:6px 0}#fgfx .zn{align-self:end}#fgfx .sub{align-self:start}
 .cw svg text{font-size:14px}.awh h3{display:none}
 }
 </style>
@@ -102,16 +78,13 @@ dt{opacity:.75}dd{margin:0}
 <section class="card" id="calsec">
 <header><div><div class="lbl">Training calendar</div><h1 id="mon"></h1></div><div class="nav"><button id="prev" aria-label="Previous week">‹</button><button id="next" aria-label="Next week">›</button></div></header>
 <div id="status" role="status">Loading…</div>
-<div class="icu" id="icu"></div>
 <div class="row" id="head"></div>
 <div id="grid"></div>
 <div id="agenda"></div>
 </section>
 <div id="dwrap" hidden><section id="detail" aria-live="polite"></section></div>
-<section class="card" id="formsec">
-<div class="lbl">Fitness &amp; recovery</div><h2>Fitness, fatigue &amp; form</h2>
-<div class="fgrid"><div id="fgfx"></div><div><div id="fchart"></div><div id="fread"></div></div></div>
-</section>
+<section class="card" id="fitsec"><div id="fit"></div></section>
+<section class="card" id="formsec"><div id="fchart"></div></section>
 </div>
 <script>
 const $=id=>document.getElementById(id);
@@ -126,12 +99,12 @@ function tc(e){return 't-'+(TY[e.type]?e.type:'x')}
 $('head').appendChild(el('div','dow','TSS'));
 function render(){
   const y=view.getFullYear(),m=view.getMonth(),dd=view.getDate();
-  const a=new Date(y,m,dd-7),z=new Date(y,m,dd+13),same=a.getFullYear()===z.getFullYear();
+  const a=new Date(y,m,dd-7),z=new Date(y,m,dd+20),same=a.getFullYear()===z.getFullYear();
   const f=(x,yr)=>x.toLocaleDateString('en-GB',yr?{day:'numeric',month:'short',year:'numeric'}:{day:'numeric',month:'short'});
-  $('mon').textContent=matchMedia('(max-width:600px)').matches?f(new Date(y,m,dd),false)+' – '+f(new Date(y,m,dd+6),true):f(a,!same)+' – '+f(z,true);
+  $('mon').textContent=f(a,!same)+' – '+f(z,true);
   const by={};events.forEach(e=>{(by[e.date]=by[e.date]||[]).push(e)});
   const g=$('grid');g.textContent='';const tk=key(new Date());
-  for(let w=0;w<3;w++){
+  for(let w=0;w<4;w++){
     const r=el('div','row');r.style.marginBottom='4px';let done=0,plan=0;
     for(let i=0;i<7;i++){
       const d=new Date(y,m,dd-7+w*7+i),k=key(d);
@@ -159,8 +132,7 @@ function fillDetail(D,e){
   D.appendChild(el('h2',null,e.name||'Workout'));
   D.appendChild(el('span','badge',e.status==='done'?'Completed':'Planned'));
   D.appendChild(el('span',null,new Date(e.date+'T00:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})));
-  if(rideId(e))D.appendChild(rideCharts(e));
-  else if(Array.isArray(e.steps)&&e.steps.length)D.appendChild(chart(e.steps));
+  if(Array.isArray(e.steps)&&e.steps.length)D.appendChild(chart(e.steps));
   const dl=el('dl');
   [['Duration',e.minutes&&e.minutes+' min'],['Load',e.tss&&e.tss+' TSS'],['Power',e.watts],['Heart rate',e.hr&&e.hr+' bpm'],['Notes',e.notes]].forEach(([a,b])=>{if(b){dl.appendChild(el('dt',null,a));dl.appendChild(el('dd',null,b))}});
   D.appendChild(dl);
@@ -169,7 +141,7 @@ function buildAgenda(){
   const A=$('agenda');A.textContent='';
   const by={};events.forEach(e=>{(by[e.date]=by[e.date]||[]).push(e)});
   const tk=key(new Date()),y=view.getFullYear(),m=view.getMonth(),dd=view.getDate(),t0=monday(new Date());
-  for(let w=1;w<2;w++){
+  for(let w=0;w<4;w++){
     const s=new Date(y,m,dd-7+w*7),en=new Date(y,m,dd-1+w*7);
     let done=0,plan=0;const body=el('div');
     for(let i=0;i<7;i++){
@@ -191,7 +163,7 @@ function buildAgenda(){
     }
     const f=x=>x.toLocaleDateString('en-GB',{day:'numeric',month:'short'}),rel=Math.round((s-t0)/604800000);
     const wk=el('div','aw'),h=el('div','awh'),l=el('div');
-    if(rel>=-1&&rel<=1)l.appendChild(el('div','lbl',['Last week','This week','Next week'][rel+1]));
+    l.appendChild(el('div','lbl',rel>=-1&&rel<=1?['Last week','This week','Next week'][rel+1]:f(s)+' – '+f(en)));
     l.appendChild(el('h3',null,f(s)+' – '+f(en)));h.appendChild(l);
     h.appendChild(el('div','tot',done?done+' TSS'+(plan?' · +'+plan+' planned':''):(plan?plan+' TSS planned':'')));
     wk.appendChild(h);wk.appendChild(body);A.appendChild(wk);
@@ -200,146 +172,6 @@ function buildAgenda(){
 const NS='http://www.w3.org/2000/svg';
 function mk(t,a,x){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e}
 function zc(p){return p<=.55?'#8b97a6':p<=.75?'#4a90d9':p<=.9?'#3fb37f':p<=1.05?'#e6c229':p<=1.2?'#f0903a':'#e0524f'}
-const ICU='https://intervals.icu/api/v1',ICU_STORE='icu_api_key';
-let memKey=null,base=[],connecting=false;const rides={};
-function apiKey(){try{return localStorage.getItem(ICU_STORE)||memKey}catch(e){return memKey}}
-function setKey(v){memKey=v;try{v?localStorage.setItem(ICU_STORE,v):localStorage.removeItem(ICU_STORE)}catch(e){}}
-function rideId(e){return e.status==='done'&&/^a_i\d+$/.test(e.id||'')?e.id.slice(2):null}
-async function icuGet(path,k){
-  const r=await fetch(ICU+path,{headers:{Authorization:'Basic '+btoa('API_KEY:'+(k||apiKey()))},credentials:'omit',cache:'no-store'});
-  if(r.status===401||r.status===403)throw new Error('auth');
-  if(!r.ok)throw new Error('http');
-  return r.json();
-}
-function getRide(id){
-  return rides[id]||(rides[id]=Promise.all([icuGet('/activity/'+id),icuGet('/activity/'+id+'/streams.json?types=time,watts,heartrate,cadence')]).catch(err=>{delete rides[id];throw err}));
-}
-function drawIcu(msg){
-  const box=$('icu');box.textContent='';
-  if(apiKey()){
-    box.appendChild(el('span',null,'Intervals connected'));
-    const b=el('button',null,'Disconnect');b.type='button';
-    b.onclick=()=>{setKey(null);for(const k in rides)delete rides[k];events=base;drawIcu();render()};
-    box.appendChild(b);return;
-  }
-  if(!connecting){
-    const b=el('button',null,'Connect Intervals for live ride charts');b.type='button';
-    b.onclick=()=>{connecting=true;drawIcu();$('icukey').focus()};
-    box.appendChild(b);return;
-  }
-  const f=el('form'),i=el('input');
-  i.id='icukey';i.type='password';i.placeholder='Intervals API key';i.autocomplete='off';i.setAttribute('aria-label','Intervals API key');
-  const go=el('button',null,'Connect'),no=el('button',null,'Cancel');no.type='button';
-  no.onclick=()=>{connecting=false;drawIcu()};
-  f.append(i,go,no);
-  f.appendChild(el('div','hint',msg||'Your key stays in this browser and is only sent to intervals.icu.'));
-  f.onsubmit=async ev=>{
-    ev.preventDefault();const k=i.value.trim();if(!k)return;go.disabled=true;
-    try{
-      const t=key(new Date());await icuGet('/athlete/0/activities?oldest='+t+'&newest='+t,k);
-      setKey(k);connecting=false;drawIcu();await loadLive();render();
-    }catch(err){drawIcu(err.message==='auth'?'Intervals rejected that key. Check it and try again.':'Couldn’t reach Intervals. Try again.')}
-  };
-  box.appendChild(f);
-}
-function liveEvent(a){
-  const n=(a.name||'Ride').replace('Zwift - ','').replace('ROUVY - ','').replace('Race: ','').replace(' - Race - ',' · ').split(' (')[0];
-  const f=a.icu_intensity||0,w=a.icu_average_watts,np=a.icu_weighted_avg_watts;
-  return{id:'a_'+a.id,date:(a.start_date_local||'').slice(0,10),name:n,status:'done',type:/ramp/i.test(n)?'test':f>=85?'threshold':'endurance',minutes:Math.round((a.moving_time||0)/60),tss:a.icu_training_load||0,hr:a.average_heartrate,watts:w?w+' W avg'+(np?', '+np+' W normalized':''):undefined};
-}
-async function loadLive(){
-  if(!apiKey())return;
-  const t=new Date(),o=new Date(t.getFullYear(),t.getMonth(),t.getDate()-120);
-  try{
-    const l=await icuGet('/athlete/0/activities?oldest='+key(o)+'&newest='+key(t));
-    const merged=base.map(e=>({...e}));
-    l.filter(a=>/Ride/.test(a.type||'')).map(liveEvent).forEach(r=>{
-      const hit=merged.find(e=>e.id===r.id);
-      if(hit){Object.assign(hit,r,{notes:hit.notes,type:hit.type});return}
-      const plan=merged.findIndex(e=>e.status==='planned'&&e.date===r.date);
-      if(plan>=0)merged.splice(plan,1);
-      merged.push(r);
-    });
-    events=merged;render();
-  }catch(err){if(err.message==='auth'){setKey(null);events=base;drawIcu('');render()}}
-}
-function rideCharts(e){
-  const w=el('div','cw rc'),id=rideId(e),msg=t=>{w.textContent='';w.appendChild(el('div','cap',t))};
-  if(!apiKey()){
-    msg('Ride charts load live from Intervals.');
-    const b=el('button','link','Connect Intervals');b.type='button';
-    b.onclick=()=>{connecting=true;drawIcu();$('icu').scrollIntoView({block:'center'});$('icukey').focus()};
-    w.appendChild(b);return w;
-  }
-  msg('Loading ride from Intervals…');
-  getRide(id).then(([a,st])=>{w.textContent='';drawRide(w,a,st)}).catch(err=>msg(err.message==='auth'?'Intervals rejected the key. Disconnect and connect again.':'Couldn’t load this ride from Intervals.'));
-  return w;
-}
-function clock(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=Math.floor(s%60);return(h?h+':'+pad(m):m)+':'+pad(x)}
-function drawRide(w,a,streams){
-  const S={};(Array.isArray(streams)?streams:[]).forEach(x=>{S[x.type]=x.data||[]});
-  const tm=S.time||[],has=k=>(S[k]||[]).some(v=>v>0);
-  if(!tm.length||!(has('watts')||has('heartrate'))){w.appendChild(el('div','cap','Intervals has no chart data for this ride.'));return}
-  const ftp=a.icu_ftp||FTP,mob=matchMedia('(max-width:600px)').matches,W=mob?360:640,L=32,R=6,N=Math.floor((W-L-R)/2),tot=tm[tm.length-1]||1;
-  const bucket=(arr,skipZero)=>{
-    const sum=new Array(N).fill(0),cnt=new Array(N).fill(0);
-    tm.forEach((t,i)=>{const v=arr[i];if(v==null||(skipZero&&!v))return;const b=Math.min(N-1,Math.floor(t/tot*N));sum[b]+=v;cnt[b]++});
-    return sum.map((v,i)=>cnt[i]?v/cnt[i]:null);
-  };
-  const X=i=>L+(i+.5)/N*(W-L-R);
-  const bands=[];
-  if(has('watts')){const d=bucket(S.watts);bands.push({k:'w',title:'Power',unit:'W',h:mob?110:120,d,lo:0,hi:Math.max(ftp*1.2,...d.filter(v=>v!=null))*1.08})}
-  if(has('heartrate')){const d=bucket(S.heartrate,true),v=d.filter(x=>x!=null);bands.push({k:'h',title:'Heart rate',unit:'bpm',h:mob?74:80,d,lo:Math.floor(Math.min(...v)/10)*10-5,hi:Math.ceil(Math.max(...v)/10)*10+5,c:'#ff8d96'})}
-  if(has('cadence')){const d=bucket(S.cadence);bands.push({k:'c',title:'Cadence',unit:'rpm',h:mob?56:60,d,lo:0,hi:Math.max(...d.filter(v=>v!=null))*1.15,c:'#9db8ff'})}
-  const GAP=20,B=18;let y=16;bands.forEach(b=>{b.top=y;y+=b.h+GAP});
-  const H=y-GAP+B,svg=mk('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Ride power, heart rate and cadence over time'});
-  bands.forEach(b=>{
-    const Y=v=>b.top+(b.hi-v)/(b.hi-b.lo)*b.h,base=b.top+b.h;b.Y=Y;
-    svg.appendChild(mk('text',{x:L,y:b.top-5,'font-size':11,fill:'currentColor','fill-opacity':.8},b.title+' · '+b.unit));
-    svg.appendChild(mk('line',{x1:L,x2:W-R,y1:base,y2:base,stroke:'currentColor','stroke-opacity':.2}));
-    [b.lo,b.hi].forEach(v=>svg.appendChild(mk('text',{x:L-4,y:Y(v)+(v===b.lo?0:8),'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.65},Math.round(v))));
-    if(b.k==='w'){
-      const bw=(W-L-R)/N;
-      b.d.forEach((v,i)=>{if(v==null||v<=0)return;svg.appendChild(mk('rect',{x:L+i*bw,y:Y(v),width:Math.max(bw-.3,.5),height:base-Y(v),fill:zc(v/ftp)}))});
-      svg.appendChild(mk('line',{x1:L,x2:W-R,y1:Y(ftp),y2:Y(ftp),stroke:'currentColor','stroke-opacity':.55,'stroke-dasharray':'4 4'}));
-      svg.appendChild(mk('text',{x:W-R,y:Y(ftp)-3,'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.8},'FTP '+ftp+' W'));
-    }else{
-      let dp='',on=false;
-      b.d.forEach((v,i)=>{if(v==null){on=false;return}dp+=(on?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);on=true});
-      svg.appendChild(mk('path',{d:dp,fill:'none',stroke:b.c,'stroke-width':1.8,'stroke-linejoin':'round','stroke-linecap':'round'}));
-    }
-    b.dot=mk('circle',{r:3.5,fill:b.c||'currentColor',stroke:'#120a1c','stroke-width':1.5,visibility:'hidden'});
-  });
-  const gap=tot>5400?1800:900;
-  for(let q=0;q<=tot;q+=gap){const qx=L+q/tot*(W-L-R);svg.appendChild(mk('text',{x:Math.min(qx,W-R),y:H-3,'text-anchor':!q?'start':qx>W-R-20?'end':'middle','font-size':10,fill:'currentColor','fill-opacity':.7},Math.round(q/60)+' min'))}
-  const cross=mk('line',{y1:16,y2:H-B,stroke:'currentColor','stroke-opacity':.5,visibility:'hidden'});
-  svg.appendChild(cross);bands.forEach(b=>svg.appendChild(b.dot));
-  const rd=el('div','rr');
-  const dflt=[a.icu_average_watts&&a.icu_average_watts+' W avg',a.average_heartrate&&a.average_heartrate+' bpm avg',a.average_cadence&&Math.round(a.average_cadence)+' rpm avg'].filter(Boolean).join(' · ');
-  const leave=()=>{cross.setAttribute('visibility','hidden');bands.forEach(b=>b.dot.setAttribute('visibility','hidden'));rd.textContent=dflt};
-  svg.addEventListener('pointermove',ev=>{
-    const r=svg.getBoundingClientRect(),x=(ev.clientX-r.left)/r.width*W,i=Math.max(0,Math.min(N-1,Math.floor((x-L)/(W-L-R)*N)));
-    cross.setAttribute('x1',X(i));cross.setAttribute('x2',X(i));cross.setAttribute('visibility','visible');
-    const parts=[clock((i+.5)/N*tot)];
-    bands.forEach(b=>{const v=b.d[i];if(v==null){b.dot.setAttribute('visibility','hidden');return}
-      b.dot.setAttribute('cx',X(i));b.dot.setAttribute('cy',b.Y(v));b.dot.setAttribute('visibility','visible');parts.push(Math.round(v)+' '+b.unit)});
-    rd.textContent=parts.join(' · ');
-  });
-  svg.addEventListener('pointerleave',leave);
-  w.appendChild(svg);w.appendChild(rd);leave();
-  const rs=el('div','rs');
-  [['Normalized',a.icu_weighted_avg_watts&&a.icu_weighted_avg_watts+' W'],['Intensity',a.icu_intensity&&(a.icu_intensity/100).toFixed(2)],['Load',a.icu_training_load&&a.icu_training_load+' TSS'],['Max HR',a.max_heartrate&&a.max_heartrate+' bpm'],['HR drift',a.decoupling!=null&&a.decoupling.toFixed(1)+'%']].forEach(([t,v])=>{if(!v)return;const c=el('div');c.appendChild(el('b',null,v));c.appendChild(el('span',null,t));rs.appendChild(c)});
-  if(rs.childNodes.length)w.appendChild(rs);
-  const zones=(a.icu_zone_times||[]).filter(z=>/^Z\d$/.test(z.id)&&z.secs>=30),top=Math.max(...zones.map(z=>z.secs),1),MID={Z1:.5,Z2:.65,Z3:.8,Z4:1,Z5:1.1,Z6:1.3,Z7:2};
-  if(zones.length){
-    w.appendChild(el('div','zh','Time in power zones'));
-    zones.forEach(z=>{
-      const row=el('div','zb'),tr=el('div','zt'),bar=el('i');
-      bar.style.width=(z.secs/top*100)+'%';bar.style.background=zc(MID[z.id]);tr.appendChild(bar);
-      row.append(el('span',null,z.id),tr,el('span','m',Math.round(z.secs/60)+' min'));w.appendChild(row);
-    });
-  }
-}
 function chart(st){
   const W=480,H=140,L=4,B=18,tot=st.reduce((a,s)=>a+s[0],0),mx=Math.max(...st.map(s=>s[1]))*1.15;
   const svg=mk('svg',{viewBox:'0 0 '+W+' '+(H+B),role:'img','aria-label':'Workout structure chart'});
@@ -359,65 +191,65 @@ function chart(st){
   for(let q=0;q<=tot;q+=gap)svg.appendChild(mk('text',{x:Math.min(L+q*sx,W-12),y:H+13,'text-anchor':q?'middle':'start','font-size':10,fill:'currentColor','fill-opacity':.7},Math.round(q/60)+' min'));
   const w=el('div','cw');w.appendChild(svg);w.appendChild(el('div','cap','Workout structure · colours show zones for FTP '+FTP+' W'));return w;
 }
-const DOT={0:'01110 10001 10011 10101 11001 10001 01110',1:'00100 01100 00100 00100 00100 00100 01110',2:'01110 10001 00001 00010 00100 01000 11111',3:'11110 00001 00001 01110 00001 00001 11110',4:'00010 00110 01010 10010 11111 00010 00010',5:'11111 10000 11110 00001 00001 10001 01110',6:'00110 01000 10000 11110 10001 10001 01110',7:'11111 00001 00010 00100 01000 01000 01000',8:'01110 10001 10001 01110 10001 10001 01110',9:'01110 10001 10001 01111 00001 00010 01100'};
-function dots(txt){
-  const P=9,n=txt.length,W=n*6*P-P,svg=mk('svg',{viewBox:'0 0 '+W+' '+(7*P),role:'img','aria-label':'Fitness '+txt});
-  [...txt].forEach((ch,i)=>{(DOT[ch]||DOT[0]).split(' ').forEach((rw,y)=>{[...rw].forEach((v,x)=>{svg.appendChild(mk('circle',{cx:i*6*P+x*P+P/2,cy:y*P+P/2,r:3.4,fill:v==='1'?'#f6efe9':'#ffffff','fill-opacity':v==='1'?1:.14}))})})});
-  return svg;
-}
-function zone(f){return f<-30?'High risk':f<-10?'Optimal':f<5?'Gray zone':f<20?'Fresh':'Transition'}
 function fmt(x){return(x>0?'+':'')+x.toFixed(1).replace('-','−')}
 function tang(P){const n=P.length,m=[],t=[];for(let i=0;i<n-1;i++)m[i]=(P[i+1][1]-P[i][1])/(P[i+1][0]-P[i][0]);t[0]=m[0];t[n-1]=m[n-2];for(let i=1;i<n-1;i++)t[i]=m[i-1]*m[i]<=0?0:(m[i-1]+m[i])/2;for(let i=0;i<n-1;i++){if(m[i]===0){t[i]=t[i+1]=0}else{const a=t[i]/m[i],b=t[i+1]/m[i],s=a*a+b*b;if(s>9){const k=3/Math.sqrt(s);t[i]=k*a*m[i];t[i+1]=k*b*m[i]}}}return t}
 function seg(P,t,a,b){let d='M'+P[a][0].toFixed(1)+' '+P[a][1].toFixed(1);for(let i=a;i<b;i++){const h=(P[i+1][0]-P[i][0])/3;d+='C'+(P[i][0]+h).toFixed(1)+' '+(P[i][1]+t[i]*h).toFixed(1)+' '+(P[i+1][0]-h).toFixed(1)+' '+(P[i+1][1]-t[i+1]*h).toFixed(1)+' '+P[i+1][0].toFixed(1)+' '+P[i+1][1].toFixed(1)}return d}
 function drawForm(){
-  const box=$('fchart'),gx=$('fgfx');box.textContent='';gx.textContent='';$('fread').textContent='';
+  const fit=$('fit'),box=$('fchart');fit.textContent='';box.textContent='';
   if(!fdata||!fdata.days||!fdata.days.length){box.appendChild(el('div','lbl','No form data yet'));return}
   const rows=fdata.days.map(r=>({d:r[0],c:r[1],a:r[2],f:r[1]-r[2],p:r[0]>fdata.asOf}));
-  const i=rows.findIndex(r=>r.d===fdata.asOf),tix=rows.findIndex(r=>r.d===key(new Date())),ix=tix<0?i:tix,v=rows.slice(Math.max(0,ix-29)),ti=v.findIndex(r=>r.d===rows[ix].d),ai=Math.max(0,v.findIndex(r=>r.d===fdata.asOf)),cur=rows[i],n=v.length;
-  gx.appendChild(el('div','lbl','Fitness'));gx.appendChild(dots(String(Math.round(cur.c))));
-  gx.appendChild(el('div','zn',zone(cur.f)));gx.appendChild(el('div','sub','Fatigue '+Math.round(cur.a)+' · Form '+fmt(cur.f)+' · as of '+new Date(cur.d+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})));
-  const mob=matchMedia('(max-width:600px)').matches,W=mob?360:640,L=40,R=8,T=24,H1=120,GAP=30,H2=120,B=24,H=T+H1+GAP+H2+B,F2=T+H1+GAP;
-  const lo=Math.min(-30,Math.min(...v.map(r=>r.f))-3),hi=Math.max(20,Math.max(...v.map(r=>r.f))+3);
-  const up=Math.max(20,Math.ceil(Math.max(...v.map(r=>Math.max(r.c,r.a)))/10)*10);
-  const X=k=>L+k/(n-1)*(W-L-R),Y1=y=>T+(up-y)/up*H1,Y=y=>F2+(hi-y)/(hi-lo)*H2;
+  const i=rows.findIndex(r=>r.d===fdata.asOf),tix=rows.findIndex(r=>r.d===key(new Date())),ix=tix<0?i:tix,v=rows.slice(Math.max(0,ix-29)),ti=v.findIndex(r=>r.d===rows[ix].d),ai=Math.max(0,v.findIndex(r=>r.d===fdata.asOf)),n=v.length;
+  const mob=matchMedia('(max-width:600px)').matches,W=mob?360:760,L=40,R=8,T=30,PH=mob?180:220,B=24,H=T+PH+B,X=k=>L+k/(n-1)*(W-L-R);
   const FIT='#8ec5ff',FAT='#ffb27d';
-  const svg=mk('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Fitness and fatigue, with form below'});
-  [0,up/2,up].forEach(y=>{
-    svg.appendChild(mk('line',{x1:L,x2:W-R,y1:Y1(y),y2:Y1(y),stroke:'currentColor','stroke-opacity':.14}));
-    svg.appendChild(mk('text',{x:L-4,y:Y1(y)+3,'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.75},y));
-  });
-  const key1=mk('circle',{cx:L+4,cy:T-13,r:4,fill:FIT}),txt1=mk('text',{x:L+13,y:T-9,'font-size':12,fill:'currentColor'},'');
-  const key2=mk('circle',{cx:L+108,cy:T-13,r:4,fill:FAT}),txt2=mk('text',{x:L+117,y:T-9,'font-size':12,fill:'currentColor'},'');
-  svg.append(key1,txt1,key2,txt2);
-  const txt3=mk('text',{x:L,y:F2-7,'font-size':12,fill:'currentColor'},'');svg.appendChild(txt3);
-  [[lo,-30,'#e0524f','High risk'],[-30,-10,'#3fb37f','Optimal'],[-10,5,'#8b97a6','Gray zone'],[5,20,'#4a90d9','Fresh'],[20,hi,'#e6c229','Transition']].forEach(([a,b,c,t])=>{
-    const a2=Math.max(a,lo),b2=Math.min(b,hi);if(b2<=a2)return;
-    svg.appendChild(mk('rect',{x:L,y:Y(b2),width:W-L-R,height:Y(a2)-Y(b2),fill:c,'fill-opacity':.26}));
-    if(Y(a2)-Y(b2)>16)svg.appendChild(mk('text',{x:W-R-4,y:Y(b2)+12,'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.75},t));
-  });
-  [-30,-10,5,20].forEach(y=>{if(y>=lo&&y<=hi)svg.appendChild(mk('text',{x:L-4,y:Y(y)+3,'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.75},fmt(y).replace('+','').replace('.0','')))});
-  svg.appendChild(mk('line',{x1:X(ti),x2:X(ti),y1:T,y2:H-B,stroke:'currentColor','stroke-opacity':.4,'stroke-dasharray':'3 3'}));
-  v.forEach((r,k)=>{if((k-ti)%(mob?14:7)===0)svg.appendChild(mk('text',{x:X(k),y:H-8,'text-anchor':X(k)>W-R-20?'end':'middle','font-size':10,fill:'currentColor','fill-opacity':.8},k===ti?'Today':new Date(r.d+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})))});
-  const line=(pts,color,width)=>{
+  const panel=label=>mk('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':label});
+  const frame=(svg)=>{
+    svg.appendChild(mk('line',{x1:X(ti),x2:X(ti),y1:T,y2:H-B,stroke:'currentColor','stroke-opacity':.4,'stroke-dasharray':'3 3'}));
+    v.forEach((r,k)=>{if((k-ti)%(mob?14:7)===0&&X(k)<=W-R-20)svg.appendChild(mk('text',{x:X(k),y:H-8,'text-anchor':'middle','font-size':10,fill:'currentColor','fill-opacity':.8},k===ti?'Today':new Date(r.d+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short'})))});
+  };
+  const line=(svg,pts,color,width)=>{
     const TT=tang(pts);
     svg.appendChild(mk('path',{d:seg(pts,TT,0,ai),fill:'none',stroke:color,'stroke-width':width,'stroke-linecap':'round'}));
     if(ai<n-1)svg.appendChild(mk('path',{d:seg(pts,TT,ai,n-1),fill:'none',stroke:color,'stroke-width':width,'stroke-dasharray':'1 5','stroke-linecap':'round'}));
   };
-  line(v.map((r,k)=>[X(k),Y1(r.a)]),FAT,1.6);
-  line(v.map((r,k)=>[X(k),Y1(r.c)]),FIT,2.6);
-  line(v.map((r,k)=>[X(k),Y(r.f)]),'currentColor',2.2);
-  const dA=mk('circle',{r:3.5,fill:FAT}),dC=mk('circle',{r:4,fill:FIT}),dF=mk('circle',{r:4,fill:'currentColor'}),cross=mk('line',{y1:T,y2:H-B,stroke:'currentColor','stroke-opacity':.5});
-  svg.append(cross,dA,dC,dF);
+  const when=()=>mk('text',{x:W-R,y:16,'text-anchor':'end','font-size':11,fill:'currentColor','fill-opacity':.8},'');
+  const cross=()=>mk('line',{y1:T,y2:H-B,stroke:'currentColor','stroke-opacity':.5});
+
+  const s1=panel('Fitness and fatigue over time'),up=Math.max(20,Math.ceil(Math.max(...v.map(r=>Math.max(r.c,r.a)))/10)*10),Y1=y=>T+(up-y)/up*PH;
+  [0,up/2,up].forEach(y=>{
+    s1.appendChild(mk('line',{x1:L,x2:W-R,y1:Y1(y),y2:Y1(y),stroke:'currentColor','stroke-opacity':.14}));
+    s1.appendChild(mk('text',{x:L-4,y:Y1(y)+3,'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.75},y));
+  });
+  const t1=mk('text',{x:L+13,y:16,'font-size':12,fill:'currentColor'},''),t2=mk('text',{x:L+117,y:16,'font-size':12,fill:'currentColor'},''),w1=when();
+  s1.append(mk('circle',{cx:L+4,cy:12,r:4,fill:FIT}),t1,mk('circle',{cx:L+108,cy:12,r:4,fill:FAT}),t2,w1);
+  frame(s1);
+  line(s1,v.map((r,k)=>[X(k),Y1(r.a)]),FAT,1.6);
+  line(s1,v.map((r,k)=>[X(k),Y1(r.c)]),FIT,2.6);
+  const c1=cross(),dA=mk('circle',{r:3.5,fill:FAT}),dC=mk('circle',{r:4,fill:FIT});s1.append(c1,dA,dC);
+
+  const s2=panel('Form over time');
+  const lo=Math.min(-30,Math.min(...v.map(r=>r.f))-3),hi=Math.max(20,Math.max(...v.map(r=>r.f))+3),Y=y=>T+(hi-y)/(hi-lo)*PH;
+  [[lo,-30,'#e0524f','High risk'],[-30,-10,'#3fb37f','Optimal'],[-10,5,'#8b97a6','Gray zone'],[5,20,'#4a90d9','Fresh'],[20,hi,'#e6c229','Transition']].forEach(([a,b,c,t])=>{
+    const a2=Math.max(a,lo),b2=Math.min(b,hi);if(b2<=a2)return;
+    s2.appendChild(mk('rect',{x:L,y:Y(b2),width:W-L-R,height:Y(a2)-Y(b2),fill:c,'fill-opacity':.26}));
+    if(Y(a2)-Y(b2)>16)s2.appendChild(mk('text',{x:W-R-4,y:Y(b2)+12,'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.75},t));
+  });
+  [-30,-10,5,20].forEach(y=>{if(y>=lo&&y<=hi)s2.appendChild(mk('text',{x:L-4,y:Y(y)+3,'text-anchor':'end','font-size':10,fill:'currentColor','fill-opacity':.75},fmt(y).replace('+','').replace('.0','')))});
+  const t3=mk('text',{x:L,y:16,'font-size':12,fill:'currentColor'},''),w2=when();s2.append(t3,w2);
+  frame(s2);
+  line(s2,v.map((r,k)=>[X(k),Y(r.f)]),'currentColor',2.2);
+  const c2=cross(),dF=mk('circle',{r:4,fill:'currentColor'});s2.append(c2,dF);
+
   const show=k=>{
-    const r=v[k],x=X(k);
-    cross.setAttribute('x1',x);cross.setAttribute('x2',x);
-    dF.setAttribute('cx',x);dF.setAttribute('cy',Y(r.f));dC.setAttribute('cx',x);dC.setAttribute('cy',Y1(r.c));dA.setAttribute('cx',x);dA.setAttribute('cy',Y1(r.a));
-    txt1.textContent='Fitness '+r.c.toFixed(1);txt2.textContent='Fatigue '+r.a.toFixed(1);txt3.textContent='Form '+fmt(r.f);
-    $('fread').textContent=new Date(r.d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+(r.p?' · projected':'');
+    const r=v[k],x=X(k),day=new Date(r.d+'T00:00:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+(r.p?' · projected':'');
+    [c1,c2].forEach(c=>{c.setAttribute('x1',x);c.setAttribute('x2',x)});
+    dC.setAttribute('cx',x);dC.setAttribute('cy',Y1(r.c));dA.setAttribute('cx',x);dA.setAttribute('cy',Y1(r.a));dF.setAttribute('cx',x);dF.setAttribute('cy',Y(r.f));
+    t1.textContent='Fitness '+r.c.toFixed(1);t2.textContent='Fatigue '+r.a.toFixed(1);t3.textContent='Form '+fmt(r.f);w1.textContent=day;w2.textContent=day;
   };
-  svg.addEventListener('pointermove',e=>{const b=svg.getBoundingClientRect();const x=(e.clientX-b.left)/b.width*W;show(Math.max(0,Math.min(n-1,Math.round((x-L)/(W-L-R)*(n-1)))))});
-  svg.addEventListener('pointerleave',()=>show(ti));
-  box.appendChild(svg);show(ti);
+  [s1,s2].forEach(svg=>{
+    svg.addEventListener('pointermove',e=>{const b=svg.getBoundingClientRect(),x=(e.clientX-b.left)/b.width*W;show(Math.max(0,Math.min(n-1,Math.round((x-L)/(W-L-R)*(n-1)))))});
+    svg.addEventListener('pointerleave',()=>show(ti));
+  });
+  fit.appendChild(s1);box.appendChild(s2);show(ti);
 }
 let ldata=null,rdata=null;
 const sd=d=>new Date(d+'T00:00:00'),dm=d=>sd(d).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
@@ -477,12 +309,14 @@ async function load(){
     const r=await fetch('data.json?'+Date.now(),{cache:'no-store'});
     if(!r.ok)throw new Error(r.status);
     const d=await r.json();
-    FTP=d.ftp||FTP;base=d.events||[];events=base;fdata=d.form||null;
+    FTP=d.ftp||FTP;events=d.events||[];fdata=d.form||null;
     $('status').textContent='Updated '+new Date(d.updatedAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-    render();drawForm();loadLive();
+    render();drawForm();
   }catch(e){$('status').textContent='Couldn’t load data.json.'}
 }
-drawIcu();load();setInterval(load,300000);
+// Clears a key saved by the earlier live-chart version of this page.
+try{localStorage.removeItem('icu_api_key')}catch(e){}
+load();setInterval(load,300000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
 </script>
 </body>

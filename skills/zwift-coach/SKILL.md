@@ -75,8 +75,6 @@ Ramp tests are scheduled in the plan. After one: FTP = 75% of best 1-minute powe
 
 The public page reads `data.json`. The athlete chose to publish workouts, power, HR and fitness data there.
 
-Ride charts are not in `data.json`. In a browser the athlete has connected with their own API key, the page loads rides and their charts live from Intervals. Never put an API key in the page, `data.json`, or a URL. Planned workouts and the form chart still come from `data.json`, so refresh it after changing the calendar.
-
 1. Write `actuals.json` from Intervals data:
    ```json
    {
