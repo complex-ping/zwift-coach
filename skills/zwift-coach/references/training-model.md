@@ -24,7 +24,7 @@ A ramp test can overstate FTP for riders with a strong anaerobic capacity. If th
 
 - 5-minute power is high relative to 20-minute power (153 W against 118 W), so sustained power is the main limiter. Sweet spot and threshold work carries the FTP goal.
 - Z2 at 87-91 W has held 130-133 bpm. Use about 135 bpm as the Z2 ceiling.
-- Intervals.icu has threshold HR at 170, which looks too high against a 175 max and 142-145 bpm averages in one-hour races. Judge effort by power until it is corrected.
+- Threshold HR is set to 160 in Intervals.icu. This is an estimate from race and interval HR, changed from 170 on 2026-11-03. Confirm it with a steady 20-minute effort.
 - Outdoor rides from August and September have no training load in Intervals.icu, so CTL understates aerobic history.
 
 ## Weekly structure
