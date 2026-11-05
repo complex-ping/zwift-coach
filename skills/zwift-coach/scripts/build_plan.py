@@ -98,6 +98,25 @@ def vo2_long(reps, minutes, pct, blocks, tail=0):
     return workout
 
 
+def easy_endurance(minutes, day):
+    """Flat zone 2 with no lifts, for a low-recovery day. day overrides the slot's usual weekday."""
+    return {
+        "name": f"Easy Endurance {minutes + 15}",
+        "type": "endurance",
+        "day": day,
+        "notes": (
+            "Low recovery, so keep this truly easy: steady zone 2 with no surges, conversational throughout. "
+            "HR should stay near or below 135 bpm. If it won't, or your legs stay heavy, ease to 60% FTP or finish early. "
+            "Saturday's intervals matter more than these minutes."
+        ),
+        "sections": [
+            section("Warmup", [ramp(10, 50, 65)]),
+            section("Main Set", [steady(minutes, 65)]),
+            section("Cooldown", [ramp(5, 60, 45)]),
+        ],
+    }
+
+
 def openers(reps, minutes, pct, tail):
     return {
         "name": f"Recovery Threshold {reps}×{minutes}",
@@ -142,7 +161,7 @@ def ramp_test():
 
 # One row per training week, Monday first: (phase, key day, threshold day, endurance day).
 WEEKS = [
-    ("Build 1", None, vo2_long(5, 3, 108, 5, 2), None),
+    ("Build 1", easy_endurance(60, "thu"), vo2(5, 3, 108, 10), None),
     ("Build 1", None, vo2_long(5, 3, 110, 3), endurance(6)),
     ("Build 1", vo2(4, 4, 110, 10), threshold(3, 10, 90, 4, 10), endurance(5)),
     ("Recovery", openers(3, 5, 100, 5), recovery(2), recovery(3)),
@@ -220,7 +239,8 @@ def build(athlete):
         for slot, workout in zip(SLOTS, slots):
             if workout is None:
                 continue
-            day = monday + timedelta(days=offsets[slot])
+            offset = DAYS.index(workout["day"]) if "day" in workout else offsets[slot]
+            day = monday + timedelta(days=offset)
             if day > end:
                 continue
             ride = {"date": day.isoformat(), "phase": phase, "workout": workout, **metrics(workout)}
