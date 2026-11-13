@@ -3,8 +3,8 @@
   "ftp_source": "ramp test",
   "max_hr": 175,
   "ride_days": {
-    "key": "tue",
-    "threshold": "thu",
+    "key": "wed",
+    "threshold": "sat",
     "endurance": "sun"
   },
   "weekly_targets": {
@@ -23,5 +23,6 @@
     }
   },
   "strength": "1-2 full-body sessions a week; best on Mon or Thu, not the day before a hard ride",
-  "gym": "Mon, Wed, Fri (leg day)"
+  "gym": "Mon, Wed, Fri (leg day)",
+  "note": "Pinned days in build_plan.py override ride_days from Nov 16 (Tue/Sun, gym Mon/Wed/Fri)"
 }
