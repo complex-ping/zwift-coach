@@ -23,6 +23,7 @@ A ramp test can overstate FTP for riders with a strong anaerobic capacity. If th
 ## Athlete notes (November 2026)
 
 - 5-minute power is high relative to 20-minute power (153 W against 118 W), so sustained power is the main limiter. Sweet spot and threshold work carries the FTP goal.
+- The Nov 8 VO2max 5×3 at 108% held 134 W in every rep but counted only about 12 min in zones 4-5, because the ramp into each rep is lost. Use 4-minute reps (nominal 20 min) to land at 15+.
 - Z2 at 87-91 W has held 130-133 bpm. Use about 135 bpm as the Z2 ceiling.
 - Threshold HR is set to 160 in Intervals.icu. This is an estimate from race and interval HR, changed from 170 on 2026-11-03. Confirm it with a steady 20-minute effort.
 - Outdoor rides from August and September have no training load in Intervals.icu, so CTL understates aerobic history.
@@ -59,8 +60,8 @@ Every fourth week is a recovery week: reduce volume and keep a small dose of int
 | Phase | Key day | Threshold day | Endurance day |
 |---|---|---|---|
 | Build 1, Nov 2-8 | Thu: easy endurance, 75 min | 5×3 at 108%, 60 min | None |
-| Build 1, Nov 9-15 | None | 5×3 at 110% + endurance, 95 min | 105 min |
-| Build 1, Nov 16-22 | 4×4 at 110% | 3×10 at 90% | 90 min |
+| Build 1, Nov 9-15 | None | 5×4 at 108% + endurance, 105 min | 105 min |
+| Build 1, Nov 16-22 (Tue and Sun only) | Tue: 5×4 at 108% + endurance, 90 min | None | Sun: 3×12 sweet spot + endurance, 128 min |
 | Recovery | 3×5 at 100% | 45 min easy | 60 min easy |
 | Build 2 | Ramp test, 5×4 at 108%, 5×4 at 110% | 2×10 at 95%, 3×12 at 90%, 2×20 at 90% | 90-105 min |
 | Recovery | 3×5 at 100% | 45 min easy | 60 min easy |

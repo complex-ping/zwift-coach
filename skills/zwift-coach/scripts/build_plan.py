@@ -98,6 +98,21 @@ def vo2_long(reps, minutes, pct, blocks, tail=0):
     return workout
 
 
+def on(workout, day):
+    """Pin a workout to a weekday, overriding its slot's usual day."""
+    workout["day"] = day
+    return workout
+
+
+def sweet_long(reps, minutes, pct, blocks):
+    """Sweet spot blocks, then steady zone 2 with tempo lifts, for a two-ride week."""
+    workout = threshold(reps, minutes, pct, 4, 0)
+    workout["name"] += " + Endurance"
+    workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the sweet spot."
+    workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
+    return workout
+
+
 def easy_endurance(minutes, day):
     """Flat zone 2 with no lifts, for a low-recovery day. day overrides the slot's usual weekday."""
     return {
@@ -162,8 +177,8 @@ def ramp_test():
 # One row per training week, Monday first: (phase, key day, threshold day, endurance day).
 WEEKS = [
     ("Build 1", easy_endurance(60, "thu"), vo2(5, 3, 108, 10), None),
-    ("Build 1", None, vo2_long(5, 3, 110, 3), endurance(6)),
-    ("Build 1", vo2(4, 4, 110, 10), threshold(3, 10, 90, 4, 10), endurance(5)),
+    ("Build 1", None, vo2_long(5, 4, 108, 3), endurance(6)),
+    ("Build 1", on(vo2_long(5, 4, 108, 2), "tue"), None, on(sweet_long(3, 12, 90, 4), "sun")),
     ("Recovery", openers(3, 5, 100, 5), recovery(2), recovery(3)),
     ("Build 2", ramp_test(), threshold(2, 10, 95, 5, 30), endurance(6)),
     ("Build 2", vo2(5, 4, 108, 10), threshold(3, 12, 90, 4, 10), endurance(5)),
