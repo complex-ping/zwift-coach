@@ -3,8 +3,8 @@
   "ftp_source": "ramp test",
   "max_hr": 175,
   "ride_days": {
-    "key": "wed",
-    "threshold": "sat",
+    "key": "tue",
+    "threshold": "thu",
     "endurance": "sun"
   },
   "weekly_targets": {
@@ -22,5 +22,6 @@
       "2026-11-02": 60
     }
   },
-  "strength": "1-2 full-body sessions a week; best on Mon or Thu, not the day before a hard ride"
+  "strength": "1-2 full-body sessions a week; best on Mon or Thu, not the day before a hard ride",
+  "gym": "Mon, Wed, Fri (leg day)"
 }

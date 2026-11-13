@@ -38,7 +38,7 @@ def cooldown(endurance_minutes):
     return section("Cooldown", steps + [ramp(5, 60, 45)])
 
 
-def vo2(reps, minutes, pct, tail):
+def vo2(reps, minutes, pct, tail, rest_pct=55):
     return {
         "name": f"VO2max {reps}×{minutes}",
         "type": "vo2max",
@@ -49,13 +49,13 @@ def vo2(reps, minutes, pct, tail):
         ),
         "sections": [
             warmup(),
-            section("Main Set", [steady(minutes, pct), steady(minutes, 55)], reps),
+            section("Main Set", [steady(minutes, pct), steady(minutes, rest_pct)], reps),
             cooldown(tail),
         ],
     }
 
 
-def threshold(reps, minutes, pct, rest, tail):
+def threshold(reps, minutes, pct, rest, tail, rest_pct=55):
     label = "Sweet Spot" if pct <= 90 else "Threshold"
     return {
         "name": f"{label} {reps}×{minutes}",
@@ -66,7 +66,7 @@ def threshold(reps, minutes, pct, rest, tail):
         ),
         "sections": [
             warmup(),
-            section("Main Set", [steady(minutes, pct), steady(rest, 55)], reps),
+            section("Main Set", [steady(minutes, pct), steady(rest, rest_pct)], reps),
             cooldown(tail),
         ],
     }
@@ -89,9 +89,9 @@ def endurance(blocks):
     }
 
 
-def vo2_long(reps, minutes, pct, blocks, tail=0):
+def vo2_long(reps, minutes, pct, blocks, tail=0, rest_pct=55):
     """VO2max set plus endurance in one ride, for weeks with fewer riding days."""
-    workout = vo2(reps, minutes, pct, tail)
+    workout = vo2(reps, minutes, pct, tail, rest_pct)
     workout["name"] += " + Endurance"
     workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the main set."
     workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
@@ -104,9 +104,9 @@ def on(workout, day):
     return workout
 
 
-def sweet_long(reps, minutes, pct, blocks):
+def sweet_long(reps, minutes, pct, blocks, rest_pct=55):
     """Sweet spot blocks, then steady zone 2 with tempo lifts, for a two-ride week."""
-    workout = threshold(reps, minutes, pct, 4, 0)
+    workout = threshold(reps, minutes, pct, 4, 0, rest_pct)
     workout["name"] += " + Endurance"
     workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the sweet spot."
     workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
@@ -155,7 +155,7 @@ def recovery(blocks):
     return workout
 
 
-def ramp_test():
+def ramp_test(tail=0):
     # Each step adds about 20 W at 125 W FTP, the standard ramp protocol.
     climb = [steady(1, pct) for pct in (64, 80, 96, 112, 128, 144, 160, 176)]
     return {
@@ -169,7 +169,7 @@ def ramp_test():
         "sections": [
             section("Warmup", [ramp(5, 45, 65), steady(3, 65)]),
             section("Ramp to failure", climb),
-            section("Cooldown", [steady(10, 50)]),
+            section("Cooldown", [steady(10, 50)] + ([steady(tail, 65)] if tail else [])),
         ],
     }
 
@@ -179,12 +179,12 @@ WEEKS = [
     ("Build 1", easy_endurance(60, "thu"), vo2(5, 3, 108, 10), None),
     ("Build 1", None, vo2_long(5, 4, 108, 3), endurance(6)),
     ("Build 1", on(vo2_long(5, 4, 108, 2), "tue"), None, on(sweet_long(3, 12, 90, 4), "sun")),
-    ("Recovery", openers(3, 5, 100, 5), recovery(2), recovery(3)),
-    ("Build 2", ramp_test(), threshold(2, 10, 95, 5, 30), endurance(6)),
-    ("Build 2", vo2(5, 4, 108, 10), threshold(3, 12, 90, 4, 10), endurance(5)),
-    ("Build 2", vo2(5, 4, 110, 10), threshold(2, 20, 90, 5, 8), endurance(5)),
-    ("Recovery", openers(3, 5, 100, 5), recovery(2), recovery(3)),
-    ("Retest", ramp_test(), None, None),
+    ("Recovery", on(openers(3, 6, 100, 5), "tue"), None, on(recovery(4), "sun")),
+    ("Test", on(ramp_test(25), "tue"), None, on(sweet_long(3, 15, 90, 4, 60), "sun")),
+    ("Build 2", on(vo2_long(5, 4, 110, 2, 0, 60), "tue"), None, on(sweet_long(2, 20, 90, 3, 60), "sun")),
+    ("Build 2", on(vo2_long(6, 4, 108, 1, 0, 60), "tue"), None, on(sweet_long(3, 15, 90, 3, 60), "sun")),
+    ("Recovery", on(openers(3, 6, 100, 5), "tue"), None, on(recovery(4), "sun")),
+    ("Retest", on(ramp_test(), "tue"), None, None),
 ]
 
 SLOTS = ("key", "threshold", "endurance")
@@ -282,7 +282,7 @@ def report(weeks, targets, credit):
         z45_ok = wk["z45"] >= targets["z4_z5_min"]
         if z23_ok and z45_ok:
             status = "on target"
-        elif wk["phase"] in ("Recovery", "Retest"):
+        elif wk["phase"] in ("Recovery", "Retest", "Test"):
             status = "below target by design"
         else:
             status = "MISSES TARGET"

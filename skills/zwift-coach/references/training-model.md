@@ -30,7 +30,7 @@ A ramp test can overstate FTP for riders with a strong anaerobic capacity. If th
 
 ## Weekly structure
 
-Three rides, with the hard days spread out:
+Rides are Tuesday and Sunday from Nov 16 (gym Mon/Wed/Fri). Earlier weeks used three rides:
 
 | Slot | Purpose | Why here |
 |---|---|---|
@@ -62,7 +62,9 @@ Every fourth week is a recovery week: reduce volume and keep a small dose of int
 | Build 1, Nov 2-8 | Thu: easy endurance, 75 min | 5×3 at 108%, 60 min | None |
 | Build 1, Nov 9-15 | None | 5×4 at 108% + endurance, 105 min | 105 min |
 | Build 1, Nov 16-22 (Tue and Sun only) | Tue: 5×4 at 108% + endurance, 90 min | None | Sun: 3×12 sweet spot + endurance, 128 min |
-| Recovery | 3×5 at 100% | 45 min easy | 60 min easy |
-| Build 2 | Ramp test, 5×4 at 108%, 5×4 at 110% | 2×10 at 95%, 3×12 at 90%, 2×20 at 90% | 90-105 min |
-| Recovery | 3×5 at 100% | 45 min easy | 60 min easy |
-| Retest | Ramp test | None | None |
+| Recovery, Nov 23-29 | Tue: 3×6 at 100%, 52 min | None | Sun: easy endurance, 75 min |
+| Test, Nov 30-Dec 6 | Tue: ramp test + 25 min easy | None | Sun: 3×15 sweet spot + endurance, 137 min |
+| Build 2, Dec 7-13 | Tue: 5×4 at 110% + endurance, 90 min | None | Sun: 2×20 sweet spot + endurance, 113 min |
+| Build 2, Dec 14-20 | Tue: 6×4 at 108% + endurance, 83 min | None | Sun: 3×15 sweet spot + endurance, 122 min |
+| Recovery, Dec 21-27 | Tue: 3×6 at 100%, 52 min | None | Sun: easy endurance, 75 min |
+| Retest, Dec 28-31 | Tue: ramp test | None | None |
