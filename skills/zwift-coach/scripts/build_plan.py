@@ -34,7 +34,7 @@ def warmup():
 
 
 def cooldown(endurance_minutes):
-    steps = [steady(endurance_minutes, 65)] if endurance_minutes else []
+    steps = [steady(endurance_minutes, 60)] if endurance_minutes else []
     return section("Cooldown", steps + [ramp(5, 60, 45)])
 
 
@@ -83,7 +83,7 @@ def endurance(blocks):
         ),
         "sections": [
             section("Warmup", [ramp(10, 50, 65)]),
-            section("Main Set", [steady(12, 65), steady(3, 74)], blocks),
+            section("Main Set", [steady(12, 60), steady(3, 70)], blocks),
             section("Cooldown", [ramp(5, 60, 45)]),
         ],
     }
@@ -94,7 +94,7 @@ def vo2_long(reps, minutes, pct, blocks, tail=0, rest_pct=55):
     workout = vo2(reps, minutes, pct, tail, rest_pct)
     workout["name"] += " + Endurance"
     workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the main set."
-    workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
+    workout["sections"].insert(2, section("Endurance", [steady(12, 60), steady(3, 70)], blocks))
     return workout
 
 
@@ -109,7 +109,7 @@ def sweet_long(reps, minutes, pct, blocks, rest_pct=55):
     workout = threshold(reps, minutes, pct, 4, 0, rest_pct)
     workout["name"] += " + Endurance"
     workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the sweet spot."
-    workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
+    workout["sections"].insert(2, section("Endurance", [steady(12, 60), steady(3, 70)], blocks))
     return workout
 
 
@@ -126,7 +126,7 @@ def easy_endurance(minutes, day):
         ),
         "sections": [
             section("Warmup", [ramp(10, 50, 65)]),
-            section("Main Set", [steady(minutes, 65)]),
+            section("Main Set", [steady(minutes, 60)]),
             section("Cooldown", [ramp(5, 60, 45)]),
         ],
     }
@@ -321,7 +321,7 @@ def page_target(workout, ftp):
     if not main:
         return "Ride to failure"
     watts = round(main["steps"][0]["from"] * ftp / 100)
-    return f"{watts} W" if workout["type"] != "endurance" else f"{round(65 * ftp / 100)} W + lifts"
+    return f"{watts} W" if workout["type"] != "endurance" else f"{round(60 * ftp / 100)} W + lifts"
 
 
 def to_page_event(ride, ftp):

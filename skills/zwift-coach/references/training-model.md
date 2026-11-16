@@ -25,6 +25,7 @@ A ramp test can overstate FTP for riders with a strong anaerobic capacity. If th
 - 5-minute power is high relative to 20-minute power (153 W against 118 W), so sustained power is the main limiter. Sweet spot and threshold work carries the FTP goal.
 - The Nov 8 VO2max 5×3 at 108% held 134 W in every rep but counted only about 12 min in zones 4-5, because the ramp into each rep is lost. Use 4-minute reps (nominal 20 min) to land at 15+.
 - Z2 at 87-91 W has held 130-133 bpm. Use about 135 bpm as the Z2 ceiling.
+- On Nov 15, the day after VO2max, 65% FTP (81 W) pushed HR past 135 and the athlete dropped Zwift difficulty to 90%. Endurance is now written at 60% FTP (75 W) with 70% lifts, still inside Z2 so the weekly Z2-3 minutes are unaffected. Revisit after the Dec 1 ramp test.
 - Threshold HR is set to 160 in Intervals.icu. This is an estimate from race and interval HR, changed from 170 on 2026-11-03. Confirm it with a steady 20-minute effort.
 - Outdoor rides from August and September have no training load in Intervals.icu, so CTL understates aerobic history.
 
