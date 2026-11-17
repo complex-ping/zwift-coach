@@ -25,7 +25,7 @@ A ramp test can overstate FTP for riders with a strong anaerobic capacity. If th
 - 5-minute power is high relative to 20-minute power (153 W against 118 W), so sustained power is the main limiter. Sweet spot and threshold work carries the FTP goal.
 - The Nov 8 VO2max 5×3 at 108% held 134 W in every rep but counted only about 12 min in zones 4-5, because the ramp into each rep is lost. Use 4-minute reps (nominal 20 min) to land at 15+.
 - Z2 at 87-91 W has held 130-133 bpm. Use about 135 bpm as the Z2 ceiling.
-- On Nov 15, the day after VO2max, 65% FTP (81 W) pushed HR past 135 and the athlete dropped Zwift difficulty to 90%. Endurance is now written at 60% FTP (75 W) with 70% lifts, still inside Z2 so the weekly Z2-3 minutes are unaffected. Revisit after the Dec 1 ramp test.
+- On Nov 15, the day after VO2max, 65% FTP (81 W) pushed HR past 135 and the athlete dropped Zwift difficulty to 90%. Athlete chose to keep endurance at 65% FTP; use the Zwift difficulty slider (about 90%) after hard days rather than rewriting the plan.
 - Threshold HR is set to 160 in Intervals.icu. This is an estimate from race and interval HR, changed from 170 on 2026-11-03. Confirm it with a steady 20-minute effort.
 - Outdoor rides from August and September have no training load in Intervals.icu, so CTL understates aerobic history.
 
@@ -62,7 +62,7 @@ Every fourth week is a recovery week: reduce volume and keep a small dose of int
 |---|---|---|---|
 | Build 1, Nov 2-8 | Thu: easy endurance, 75 min | 5×3 at 108%, 60 min | None |
 | Build 1, Nov 9-15 | None | 5×4 at 108% + endurance, 105 min | 105 min |
-| Build 1, Nov 16-22 (Tue and Sun only) | Tue: 5×4 at 108% + endurance, 90 min | None | Sun: 3×12 sweet spot + endurance, 128 min |
+| Build 1, Nov 16-22 (Tue and Thu) | Tue: 5×4 at 108% + endurance, 90 min | None | Thu: 3×12 sweet spot + endurance, 128 min |
 | Recovery, Nov 23-29 | Tue: 3×6 at 100%, 52 min | None | Sun: easy endurance, 75 min |
 | Test, Nov 30-Dec 6 | Tue: ramp test + 25 min easy | None | Sun: 3×15 sweet spot + endurance, 137 min |
 | Build 2, Dec 7-13 | Tue: 5×4 at 110% + endurance, 90 min | None | Sun: 2×20 sweet spot + endurance, 113 min |

@@ -34,7 +34,7 @@ def warmup():
 
 
 def cooldown(endurance_minutes):
-    steps = [steady(endurance_minutes, 60)] if endurance_minutes else []
+    steps = [steady(endurance_minutes, 65)] if endurance_minutes else []
     return section("Cooldown", steps + [ramp(5, 60, 45)])
 
 
@@ -83,7 +83,7 @@ def endurance(blocks):
         ),
         "sections": [
             section("Warmup", [ramp(10, 50, 65)]),
-            section("Main Set", [steady(12, 60), steady(3, 70)], blocks),
+            section("Main Set", [steady(12, 65), steady(3, 74)], blocks),
             section("Cooldown", [ramp(5, 60, 45)]),
         ],
     }
@@ -94,7 +94,7 @@ def vo2_long(reps, minutes, pct, blocks, tail=0, rest_pct=55):
     workout = vo2(reps, minutes, pct, tail, rest_pct)
     workout["name"] += " + Endurance"
     workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the main set."
-    workout["sections"].insert(2, section("Endurance", [steady(12, 60), steady(3, 70)], blocks))
+    workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
     return workout
 
 
@@ -109,7 +109,7 @@ def sweet_long(reps, minutes, pct, blocks, rest_pct=55):
     workout = threshold(reps, minutes, pct, 4, 0, rest_pct)
     workout["name"] += " + Endurance"
     workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the sweet spot."
-    workout["sections"].insert(2, section("Endurance", [steady(12, 60), steady(3, 70)], blocks))
+    workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
     return workout
 
 
@@ -126,7 +126,7 @@ def easy_endurance(minutes, day):
         ),
         "sections": [
             section("Warmup", [ramp(10, 50, 65)]),
-            section("Main Set", [steady(minutes, 60)]),
+            section("Main Set", [steady(minutes, 65)]),
             section("Cooldown", [ramp(5, 60, 45)]),
         ],
     }
@@ -178,7 +178,7 @@ def ramp_test(tail=0):
 WEEKS = [
     ("Build 1", easy_endurance(60, "thu"), vo2(5, 3, 108, 10), None),
     ("Build 1", None, vo2_long(5, 4, 108, 3), endurance(6)),
-    ("Build 1", on(vo2_long(5, 4, 108, 2), "tue"), None, on(sweet_long(3, 12, 90, 4), "sun")),
+    ("Build 1", on(vo2_long(5, 4, 108, 2), "tue"), None, on(sweet_long(3, 12, 90, 4), "thu")),
     ("Recovery", on(openers(3, 6, 100, 5), "tue"), None, on(recovery(4), "sun")),
     ("Test", on(ramp_test(25), "tue"), None, on(sweet_long(3, 15, 90, 4, 60), "sun")),
     ("Build 2", on(vo2_long(5, 4, 110, 2, 0, 60), "tue"), None, on(sweet_long(2, 20, 90, 3, 60), "sun")),
@@ -321,7 +321,7 @@ def page_target(workout, ftp):
     if not main:
         return "Ride to failure"
     watts = round(main["steps"][0]["from"] * ftp / 100)
-    return f"{watts} W" if workout["type"] != "endurance" else f"{round(60 * ftp / 100)} W + lifts"
+    return f"{watts} W" if workout["type"] != "endurance" else f"{round(65 * ftp / 100)} W + lifts"
 
 
 def to_page_event(ride, ftp):
