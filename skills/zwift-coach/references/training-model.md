@@ -62,7 +62,7 @@ Every fourth week is a recovery week: reduce volume and keep a small dose of int
 |---|---|---|---|
 | Build 1, Nov 2-8 | Thu: easy endurance, 75 min | 5×3 at 108%, 60 min | None |
 | Build 1, Nov 9-15 | None | 5×4 at 108% + endurance, 105 min | 105 min |
-| Build 1, Nov 16-22 (Tue and Thu) | Tue: 5×4 at 108% + endurance, 90 min | None | Thu: 3×12 sweet spot + endurance, 128 min |
+| Build 1, Nov 16-22 (Tue and Sun) | Tue: 5×4 at 108% + endurance, 90 min | None | Sun: 3×12 sweet spot + endurance, 128 min |
 | Recovery, Nov 23-29 | Tue: 3×6 at 100%, 52 min | None | Sun: easy endurance, 75 min |
 | Test, Nov 30-Dec 6 | Tue: ramp test + 25 min easy | None | Sun: 3×15 sweet spot + endurance, 137 min |
 | Build 2, Dec 7-13 | Tue: 5×4 at 110% + endurance, 90 min | None | Sun: 2×20 sweet spot + endurance, 113 min |

@@ -178,7 +178,7 @@ def ramp_test(tail=0):
 WEEKS = [
     ("Build 1", easy_endurance(60, "thu"), vo2(5, 3, 108, 10), None),
     ("Build 1", None, vo2_long(5, 4, 108, 3), endurance(6)),
-    ("Build 1", on(vo2_long(5, 4, 108, 2), "tue"), None, on(sweet_long(3, 12, 90, 4), "thu")),
+    ("Build 1", on(vo2_long(5, 4, 108, 2), "tue"), None, on(sweet_long(3, 12, 90, 4), "sun")),
     ("Recovery", on(openers(3, 6, 100, 5), "tue"), None, on(recovery(4), "sun")),
     ("Test", on(ramp_test(25), "tue"), None, on(sweet_long(3, 15, 90, 4, 60), "sun")),
     ("Build 2", on(vo2_long(5, 4, 110, 2, 0, 60), "tue"), None, on(sweet_long(2, 20, 90, 3, 60), "sun")),
