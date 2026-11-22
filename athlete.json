@@ -24,5 +24,5 @@
   },
   "strength": "1-2 full-body sessions a week; best on Mon or Thu, not the day before a hard ride",
   "gym": "Mon, Wed, Fri (leg day)",
-  "note": "Pinned days in build_plan.py override ride_days from Nov 16 (Tue/Sun, gym Mon/Wed/Fri)"
+  "note": "Pinned days in build_plan.py override ride_days from Nov 16 (Tue/Sun, then Tue/Sat from Nov 23; gym Mon/Wed/Fri)"
 }
