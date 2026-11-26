@@ -26,7 +26,7 @@ Read [references/training-model.md](references/training-model.md) before designi
    ```bash
    python3 -I scripts/build_plan.py --athlete athlete.json --out-events events.json --out-page data.json --today YYYY-MM-DD
    ```
-2. The report must not say `MISSES TARGET`. Recovery and retest weeks may be below target by design.
+2. The report must not say `MISSES TARGET`. This athlete has no recovery weeks, so every week must be on target.
 3. Compare with current load: weekly fitness (CTL) growth above about 5 is too steep, so reduce the block.
 4. Read existing events with `icu_get_calendar_events` for the same dates. Skip any date that already has a workout, and tell the athlete about the conflict.
 5. Create with `icu_bulk_create_events`, passing the contents of `events.json`.

@@ -108,7 +108,7 @@ def sweet_long(reps, minutes, pct, blocks, rest_pct=55):
     """Sweet spot blocks, then steady zone 2 with tempo lifts, for a two-ride week."""
     workout = threshold(reps, minutes, pct, 4, 0, rest_pct)
     workout["name"] += " + Endurance"
-    workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the sweet spot."
+    workout["notes"] += " Then settle into steady zone 2. Short on time? Cut the endurance, not the " + ("sweet spot." if pct <= 90 else "intervals.")
     workout["sections"].insert(2, section("Endurance", [steady(12, 65), steady(3, 74)], blocks))
     return workout
 
@@ -179,12 +179,12 @@ WEEKS = [
     ("Build 1", easy_endurance(60, "thu"), vo2(5, 3, 108, 10), None),
     ("Build 1", None, vo2_long(5, 4, 108, 3), endurance(6)),
     ("Build 1", on(vo2_long(5, 4, 108, 2), "tue"), None, on(sweet_long(3, 12, 90, 4), "sun")),
-    ("Recovery", on(openers(3, 6, 100, 5), "thu"), None, on(recovery(4), "sat")),
-    ("Test", on(ramp_test(25), "tue"), None, on(sweet_long(3, 15, 90, 4, 60), "sat")),
+    ("Build 1", on(vo2_long(5, 4, 108, 2, 0, 60), "thu"), None, on(sweet_long(3, 15, 90, 3, 60), "sat")),
+    ("Test", on(ramp_test(27), "tue"), None, on(sweet_long(3, 8, 95, 6, 60), "sat")),
     ("Build 2", on(vo2_long(5, 4, 110, 2, 0, 60), "tue"), None, on(sweet_long(2, 20, 90, 3, 60), "sat")),
     ("Build 2", on(vo2_long(6, 4, 108, 1, 0, 60), "tue"), None, on(sweet_long(3, 15, 90, 3, 60), "sat")),
-    ("Recovery", on(openers(3, 6, 100, 5), "tue"), None, on(recovery(4), "sat")),
-    ("Retest", on(ramp_test(), "tue"), None, None),
+    ("Build 3", on(vo2_long(5, 4, 110, 2, 0, 60), "tue"), None, on(sweet_long(3, 15, 90, 3, 60), "sat")),
+    ("Test", on(ramp_test(27), "tue"), None, on(sweet_long(3, 8, 95, 6, 60), "sat")),
 ]
 
 SLOTS = ("key", "threshold", "endurance")
@@ -282,8 +282,6 @@ def report(weeks, targets, credit):
         z45_ok = wk["z45"] >= targets["z4_z5_min"]
         if z23_ok and z45_ok:
             status = "on target"
-        elif wk["phase"] in ("Recovery", "Retest", "Test"):
-            status = "below target by design"
         else:
             status = "MISSES TARGET"
             missed_hard = True

@@ -54,18 +54,18 @@ Change one variable at a time, in this order:
 2. Add time in zone: more reps or longer reps.
 3. Add intensity: 2-3% at a time.
 
-Every fourth week is a recovery week: reduce volume and keep a small dose of intensity. Retest FTP after recovery weeks, not after hard ones.
+The athlete chose no recovery weeks (2026-11-26): every week, ramp test weeks included, must meet both weekly targets. Watch fatigue and form, and use the Adjust load table in SKILL.md when signals call for it. Retest FTP at the start of a week, before that week's other hard ride.
 
 ## Current block
 
-| Phase | Key day | Threshold day | Endurance day |
-|---|---|---|---|
-| Build 1, Nov 2-8 | Thu: easy endurance, 75 min | 5×3 at 108%, 60 min | None |
-| Build 1, Nov 9-15 | None | 5×4 at 108% + endurance, 105 min | 105 min |
-| Build 1, Nov 16-22 (Tue and Sun) | Tue: 5×4 at 108% + endurance, 90 min | None | Sun: 3×12 sweet spot + endurance, 128 min |
-| Recovery, Nov 23-29 | Thu: 3×6 at 100%, 52 min | None | Sat: easy endurance, 75 min |
-| Test, Nov 30-Dec 6 | Tue: ramp test + 25 min easy | None | Sat: 3×15 sweet spot + endurance, 137 min |
-| Build 2, Dec 7-13 | Tue: 5×4 at 110% + endurance, 90 min | None | Sat: 2×20 sweet spot + endurance, 113 min |
-| Build 2, Dec 14-20 | Tue: 6×4 at 108% + endurance, 83 min | None | Sat: 3×15 sweet spot + endurance, 122 min |
-| Recovery, Dec 21-27 | Tue: 3×6 at 100%, 52 min | None | Sat: easy endurance, 75 min |
-| Retest, Dec 28-31 | Tue: ramp test | None | None |
+| Phase | First ride | Second ride |
+|---|---|---|
+| Build 1, Nov 2-8 | Thu: easy endurance, 75 min | 5×3 at 108%, 60 min |
+| Build 1, Nov 9-15 | Sat: 5×4 at 108% + endurance, 105 min | Sun: endurance, 105 min |
+| Build 1, Nov 16-22 | Tue: 5×4 at 108% + endurance, 90 min | Sun: 3×12 sweet spot + endurance, 128 min |
+| Build 1, Nov 23-29 | Thu: 5×4 at 108% + endurance, 90 min | Sat: 3×15 sweet spot + endurance, 122 min |
+| Test, Nov 30-Dec 6 | Tue: ramp test + 27 min easy | Sat: 3×8 at 95% + endurance, 146 min |
+| Build 2, Dec 7-13 | Tue: 5×4 at 110% + endurance, 90 min | Sat: 2×20 sweet spot + endurance, 113 min |
+| Build 2, Dec 14-20 | Tue: 6×4 at 108% + endurance, 83 min | Sat: 3×15 sweet spot + endurance, 122 min |
+| Build 3, Dec 21-27 | Tue: 5×4 at 110% + endurance, 90 min | Sat: 3×15 sweet spot + endurance, 122 min |
+| Test, Dec 28-Jan 3 | Tue: ramp test + 27 min easy | Sat Jan 2: 3×8 at 95% + endurance, 146 min |
